@@ -1,0 +1,25 @@
+{% extends 'guest.html' %}
+
+{% block title %} Logar {% endblock %}
+
+{% block content %}
+
+<div class="w-full max-w-xs mx-auto">
+  <form method="post" action="{% url 'login' %}" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    {% csrf_token %}
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Nome do usuário</label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:shadow-fuchsia-400 focus:placeholder:text-fuchsia-400" name="username" id="username" type="text" placeholder="Nome do usuário">
+      </div>
+      <div class="mb-6">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Senha</label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:shadow-fuchsia-400 focus:placeholder:text-fuchsia-400" name="password" id="password" type="password" placeholder="******************">
+      </div>
+      <div class="flex items-center justify-between">
+        <button class="bg-fuchsia-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-fuchsia-600 duration-700 ease-in-out">Entrar</button>
+        <input type="hidden" name="next" value="{{ next }}"/>
+        <a class="inline-block align-baseline font-bold text-sm text-fuchsia-400 hover:text-fuchsia-700 duration-700 ease-in-out" href="#">Esqueceu a senha?</a>
+      </div>
+    </form>
+</div>
+{% endblock %}
