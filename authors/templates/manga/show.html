@@ -3,5 +3,17 @@
 {% block title %} Mangás {% endblock %}
 
 {% block content %}
-    <h2 class="text-[2rem] text-gray-900 font-semibold lg:mb-8 mb-4">{{ manga.title }}</h2>
+    <h2 class="text-[2rem] text-gray-900 font-semibold mb-2">{{ manga.title }}</h2>
+    <div class="lg:mb12 mb-8">
+        <div class="flex flex-row lg:gap-8 gap-4 text-gray-900">
+            <div>
+                <span class="font-bold">Escrita por</span> <a href="{% url 'author.show' manga.author.id %}" class="hover:text-fuchsia-600 hover:trasition-all duration-700 ease-in-out">{{ manga.author }}</a>
+            </div>
+            <div>
+                <span class="font-bold">Publicada em</span> {{ manga.publish_date }}
+            </div>
+        </div>
+        <h3 class="mt-8 mb-2 font-bold">Sinopse:</h3>
+        <p>{{ manga.synopsis }}</p>
+    </div>
 {% endblock%}
