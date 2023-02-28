@@ -18,7 +18,7 @@
       <div class="flex items-center justify-between">
         <button class="bg-fuchsia-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-fuchsia-600 duration-700 ease-in-out">Entrar</button>
         <input type="hidden" name="next" value="{{ next }}"/>
-        <a class="inline-block align-baseline font-bold text-sm text-fuchsia-400 hover:text-fuchsia-700 duration-700 ease-in-out" href="#">Esqueceu a senha?</a>
+        <a class="inline-block align-baseline font-bold text-sm text-fuchsia-400 hover:text-fuchsia-700 duration-700 ease-in-out" href="{% url 'register' %}">É novo por aqui?</a>
       </div>
     </form>
 </div>
