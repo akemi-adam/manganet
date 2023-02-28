@@ -1,0 +1,12 @@
+{% extends 'main.html' %}
+
+{% block title %} MangáNet: {{ author.name }} {% endblock %}
+
+{% block content %}
+    <h2 class="text-[2rem] text-gray-900 font-semibold mb-8">Sobre: {{ author.name }}</h2>
+    <p>Idade: {{ author.age }}</p>
+    <p><a href="{% url 'author.index' %}" class="underline text-sky-500">Ver outros autores</a></p>
+{% endblock%}
+
+
+

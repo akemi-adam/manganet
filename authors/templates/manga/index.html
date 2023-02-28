@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+
+{% block title %} Mangás {% endblock %}
+
+{% block content %}
+    <h2 class="text-[2rem] text-gray-900 font-semibold lg:mb-8 mb-4">Todos os mangás</h2>
+    {% for manga in mangas %}
+    <div class="lg:mb12 mb-8">
+        <h3 class="text-2xl text-gray-800 font-semibold hover:text-fuchsia-600 hover:trasition-all duration-700 ease-in-out mb-1"><a href="{% url 'manga.show' manga.id %}">{{ manga.title }}</a></h3>
+        <div class="flex flex-row lg:gap-8 gap-4 text-gray-600 italic mb-4">
+            <div>
+                Autor: <a href="{% url 'author.show' manga.author.id %}" class="hover:text-fuchsia-600 hover:trasition-all duration-700 ease-in-out">{{ manga.author }}</a>
+            </div>
+            <div>
+                Data de publicação: {{ manga.publish_date }}</span>
+            </div>
+        </div>
+        <p>{{ manga.synopsis }}</p>
+    </div>
+    {% endfor %}
+{% endblock%}
