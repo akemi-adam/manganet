@@ -24,7 +24,15 @@ class Manga(models.Model):
 
     publish_date = models.DateField(verbose_name = 'Data de publicação')
 
-    users = models.ManyToManyField(get_user_model())
+    users = models.ManyToManyField(get_user_model(), through = 'Evaluation')
 
     def __str__(self) -> str:
         return f'{self.title}'
+    
+class Evaluation(models.Model):
+
+    manga = models.ForeignKey(Manga, on_delete = models.CASCADE, verbose_name = 'Mangá')
+
+    user = models.ForeignKey(get_user_model(), on_delete = models.CASCADE, verbose_name = 'Usuário')
+
+    rating = models.IntegerField(default = 0, verbose_name = 'Nota')
