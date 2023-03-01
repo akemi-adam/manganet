@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Author, Manga
 
@@ -22,3 +22,16 @@ def index_manga(request):
 @login_required
 def show_manga(request, id):
     return render(request, 'manga/show.html', { 'manga': Manga.objects.get(id = id) })
+
+@login_required
+def evaluation(request, id):
+    
+    manga = Manga.objects.get(id = id)
+
+    if request.method == 'POST':
+
+        manga.users.add(request.user, through_defaults = {'rating': request.POST.get('rating')})
+
+        return redirect(f'/accounts/profile/{request.user.id}')
+
+    return render(request, 'manga/edit.html', { 'manga': manga })

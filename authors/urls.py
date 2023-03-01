@@ -7,4 +7,5 @@ urlpatterns = [
     path('author/<int:id>', views.show_author, name = 'author.show'),
     path('manga', views.index_manga, name = 'manga.index'),
     path('manga/<int:id>', views.show_manga, name = 'manga.show'),
+    path('manga/<int:id>/evaluation', views.evaluation, name = 'manga.evaluation'),
 ]
