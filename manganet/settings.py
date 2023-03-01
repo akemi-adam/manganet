@@ -45,8 +45,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'authors',
     'accounts',
+
+    'widget_tweaks',
 ]
 
 """ LOGIN_REDIRECT_URL = "/dashboard"
