@@ -15,7 +15,7 @@
         </div>
         <h3 class="mt-8 mb-2 font-bold">Sinopse:</h3>
         <p class="mb-8">{{ manga.synopsis }}</p>
-        <form action="{% url 'manga.evaluation' manga.id %}" method="post">
+        <form action="{% url 'manga.evaluation.store' manga.id %}" method="post">
             {% csrf_token %}
             <label for="rating" class="block mb-2 text-sm font-bold">Nota</label>
             <div class="flex flex-row lg:space-x-32 md:space-x-14 sm:space-x-12 space-x-7">
