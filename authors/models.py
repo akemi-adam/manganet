@@ -24,5 +24,7 @@ class Manga(models.Model):
 
     publish_date = models.DateField(verbose_name = 'Data de publicação')
 
+    users = models.ManyToManyField(get_user_model())
+
     def __str__(self) -> str:
         return f'{self.title}'
