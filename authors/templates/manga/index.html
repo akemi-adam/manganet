@@ -16,7 +16,7 @@
             </div>
         </div>
         <p class="mb-2">{{ manga.synopsis }}</p>
-        <a href="{% url 'manga.evaluation' manga.id %}" class="underline text-sky-500">Avaliar mangá</a>
+        <a href="{% url 'manga.show' manga.id %}" class="underline text-sky-500">Avaliar mangá</a>
     </div>
     {% endfor %}
 {% endblock%}

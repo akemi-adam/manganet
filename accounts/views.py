@@ -70,4 +70,6 @@ def profile(request, id):
 
     user = User.objects.get(id = id)
 
-    return render(request, 'profile.html', {'user': user})
+    evaluations = user.evaluation_set.all()
+
+    return render(request, 'profile.html', {'user': user, 'evaluations': evaluations})

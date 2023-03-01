@@ -36,3 +36,6 @@ class Evaluation(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete = models.CASCADE, verbose_name = 'Usuário')
 
     rating = models.IntegerField(default = 0, verbose_name = 'Nota')
+
+    def __str__(self) -> str:
+        return f'{self.user.username} avaliou "{self.manga.title}" como {self.rating}/10'

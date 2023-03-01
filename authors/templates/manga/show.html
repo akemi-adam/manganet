@@ -14,6 +14,25 @@
             </div>
         </div>
         <h3 class="mt-8 mb-2 font-bold">Sinopse:</h3>
-        <p>{{ manga.synopsis }}</p>
+        <p class="mb-8">{{ manga.synopsis }}</p>
+        <form action="{% url 'manga.evaluation' manga.id %}" method="post">
+            {% csrf_token %}
+            <label for="rating" class="block mb-2 text-sm font-bold">Nota</label>
+            <div class="flex flex-row lg:space-x-32 md:space-x-14 sm:space-x-12 space-x-7">
+                <div>0</div>
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+                <div>6</div>
+                <div>7</div>
+                <div>8</div>
+                <div>9</div>
+                <div>10</div>
+            </div>
+            <input name="rating" id="rating" type="range" min="0" max="10" value="5" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-fuchsia-600">
+            <button class="bg-fuchsia-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-fuchsia-600 duration-700 ease-in-out block mx-auto mt-12">Enviar</button>
+        </form>
     </div>
 {% endblock%}
