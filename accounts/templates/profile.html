@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+
+{% block title %} Perfil {% endblock %}
+
+{% block content %}
+    <div class="flex flex-row gap-4">
+        <h2 class="text-[2rem] text-gray-900 font-semibold lg:mb-8 mb-4">{{ user.username }}</h2>
+        {% if user.is_active %}
+            {% include "partials/badge.html" with color="green" notification="Ativo" %}
+        {% else %}
+            {% include "partials/badge.html" with color="red" notification="Inativo" %}
+        {% endif %}
+        {% if user.is_superuser %}
+            {% include "partials/badge.html" with color="purple" notification="Admin" %}
+        {% endif %}
+    </div>
+{% endblock%}
