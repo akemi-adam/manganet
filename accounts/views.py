@@ -64,3 +64,10 @@ def logout(request):
     leave(request)
     
     return redirect('login')
+
+@login_required
+def profile(request, id):
+
+    user = User.objects.get(id = id)
+
+    return render(request, 'profile.html', {'user': user})
