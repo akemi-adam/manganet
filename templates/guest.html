@@ -9,6 +9,13 @@
 </head>
 <body class="bg-gray-100">
     <div class="flex justify-center items-center h-screen">
+        {% if form.errors %}
+        <ul class="list-disc">
+            {% for error in form.errors %}
+            <h2 class="text-red-300">{{ error }}</h2>
+            {% endfor %}
+        </ul>
+        {% endif %}
         {% block content %}{% endblock %}
     </div>
 </body>
