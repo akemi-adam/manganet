@@ -1,9 +1,10 @@
 <header class="bg-gray-900 py-2">
     <div class="lg:mx-20 mx-12">
         <h1 class="text-white text-[2rem] hover:text-[2.1rem] duration-700 trasition-all inline group"><a href="{% url 'dashboard' %}" class="group-hover:text-fuchsia-400">Mangá<span class="text-fuchsia-400 group-hover:text-white">Net</span></a></h1>
-        <div class="flex flex-row float-right mt-4 gap-8">
+        <div class="flex flex-row float-right mt-4 gap-4 lg:gap-8">
             <div class="basis-2"><span class="text-white hover:text-fuchsia-400 hover:trasition-all duration-700 ease-in-out"><a href="{% url 'author.index' %}">Autores</a></span></div>
             <div class="basis-2"><span class="text-white hover:text-fuchsia-400 hover:trasition-all duration-700 ease-in-out"><a href="{% url 'manga.index' %}">Mangás</a></span></div>
+            <div class="basis-2"><span class="text-white hover:text-fuchsia-400 hover:trasition-all duration-700 ease-in-out"><a href="{% url 'profile' request.user.id %}">Perfil</a></span></div>
             <div class="basis-2"><span class="text-white hover:text-fuchsia-400 hover:trasition-all duration-700 ease-in-out"><a href="{% url 'logout' %}">Sair</a></span></div>
         </div>
     </div>

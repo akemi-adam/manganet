@@ -1,0 +1,9 @@
+{% if form.errors %}
+<div class="mb-4 bg-red-100 rounded pl-4">
+    {% for field, errors in form.errors.items %}
+        {% for error in errors %}
+            <span class="text-sm text-red-400">{{field}}: {{error}}</span>
+        {% endfor %}
+    {% endfor %}
+</div>
+{% endif %}

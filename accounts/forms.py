@@ -17,7 +17,7 @@ class RegisterForm(forms.ModelForm):
 
     password = forms.CharField(max_length = 30, min_length = 8, required = True)
 
-class LoginForm(forms.ModelForm):
+class LoginForm(forms.Form):
 
     class Meta:
 
