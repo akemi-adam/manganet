@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth, logout as leave
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.db.models import Q
+from .forms import LoginForm, RegisterForm
 
 # Aux functions
 
@@ -21,8 +22,10 @@ def register(request):
 
         userAlreadyExists = User.objects.filter(Q(username = name) | Q(email = mail)).values().exists()
 
-        if userAlreadyExists:
-            return redirect('register')
+        form = RegisterForm(request.POST)
+
+        if userAlreadyExists or not form.is_valid():
+            return render(request, 'auth/register.html', { 'form': form })
 
         user = User.objects.create_user(
             name, mail, request.POST.get('password')
@@ -34,7 +37,7 @@ def register(request):
 
         return redirect('dashboard')
 
-    return render(request, "auth/register.html")
+    return render(request, "auth/register.html", { 'form': RegisterForm() })
 
 @user_passes_test(guest, login_url = "/dashboard")
 def login(request):
@@ -43,13 +46,17 @@ def login(request):
 
         user = authenticate(username = request.POST.get('username'), password = request.POST.get('password'))
 
-        if user != None:
+        form = LoginForm(request.POST)
+
+        if user != None and form.is_valid():
 
             auth(request, user)
 
             return redirect('dashboard')
+        
+        return render(request, "auth/login.html", {'form': form})
 
-    return render(request, "auth/login.html")
+    return render(request, "auth/login.html", {'form': LoginForm()})
 
 @login_required
 def logout(request):
