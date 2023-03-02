@@ -32,7 +32,14 @@
                 <div>10</div>
             </div>
             <input name="rating" id="rating" type="range" min="0" max="10" value="5" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-fuchsia-600">
-            <button class="bg-fuchsia-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-fuchsia-600 duration-700 ease-in-out block mx-auto mt-12">Enviar</button>
+            <button class="bg-fuchsia-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-fuchsia-600 duration-700 ease-in-out mt-12 mx-auto block">Enviar</button>
         </form>
+        {% if is_rated %}
+        <form action="{% url 'manga.evaluation.destroy' manga.id %}" method="post" class="flex flex-col justify-center items-center mt-4">
+            {% csrf_token %}
+            <input type="hidden" name="_method" method="delete">
+            <button class="text-red-600 hover:text-red-700 hover:trasition-all duration-700 ease-in-out background-transparent outline-none uppercase hover:underline font-bold">Remover avaliação</button>
+        </form>
+        {% endif %}
     </div>
 {% endblock%}

@@ -2,10 +2,20 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    
+    #Generic routes
+    
     path('dashboard', views.dashboard, name = 'dashboard'),
-    path('author', views.index_author, name = 'author.index'),
-    path('author/<int:id>', views.show_author, name = 'author.show'),
-    path('manga', views.index_manga, name = 'manga.index'),
-    path('manga/<int:id>', views.show_manga, name = 'manga.show'),
+
+    # Author routes
+    
+    path('author', views.AuthorListView.as_view(), name = 'author.index'),
+    path('author/<int:pk>', views.AuthorDetailView.as_view(), name = 'author.show'),
+    
+    # Manga routes
+
+    path('manga', views.MangaListView.as_view(), name = 'manga.index'),
+    path('manga/<int:pk>', views.MangaDetailView.as_view(), name = 'manga.show'),
     path('manga/<int:id>/evaluation', views.store_evaluation, name = 'manga.evaluation.store'),
+    path('manga/<int:id>/evaluation/destroy', views.destroy_evaluation, name = 'manga.evaluation.destroy'),
 ]
