@@ -37,7 +37,6 @@
         {% if is_rated %}
         <form action="{% url 'manga.evaluation.destroy' manga.id %}" method="post" class="flex flex-col justify-center items-center mt-4">
             {% csrf_token %}
-            <input type="hidden" name="_method" method="delete">
             <button class="text-red-600 hover:text-red-700 hover:trasition-all duration-700 ease-in-out background-transparent outline-none uppercase hover:underline font-bold">Remover avaliação</button>
         </form>
         {% endif %}

@@ -78,10 +78,13 @@ def store_evaluation(request, id):
     else:
         manga.users.add(user, through_defaults = {'rating': rating})
 
-    return redirect(f'/accounts/profile/{user.id}')
+    return redirect('profile', id = user.id)
 
 @login_required
 def destroy_evaluation(request, id):
+
+    if request.method != 'POST':
+        return redirect('dashboard')
 
     manga = Manga.objects.get(id = id)
 
@@ -91,4 +94,4 @@ def destroy_evaluation(request, id):
 
     evaluation.delete()
 
-    return redirect(f'/accounts/profile/{user.id}')
+    return redirect('profile', id = user.id)
