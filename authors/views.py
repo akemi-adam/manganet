@@ -1,10 +1,13 @@
 from typing import Any
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.db.models.query import QuerySet
-from django.shortcuts import render, redirect
+
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+
 from django.views.generic import ListView, DetailView
+from django.shortcuts import render, redirect
+
 from .models import Author, Manga, Evaluation
 
 @login_required
