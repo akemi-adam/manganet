@@ -1,4 +1,6 @@
 from typing import Any
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect
+from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -6,7 +8,7 @@ from django.views.generic import ListView, DetailView
 from .models import Author, Manga, Evaluation
 
 @login_required
-def dashboard(request):
+def dashboard(request) -> HttpResponse:
     return render(request, 'dashboard.html')
 
 # Author controllers
@@ -18,16 +20,16 @@ class AuthorListView(ListView):
     
     template_name: str = 'author/index.html'
     
-    context_object_name = 'authors'
+    context_object_name: str = 'authors'
 
 @method_decorator(login_required, name = 'dispatch')
 class AuthorDetailView(DetailView):
     
     model: Author = Author
     
-    template_name = 'author/show.html'
+    template_name: str = 'author/show.html'
     
-    context_object_name = 'author'
+    context_object_name: str = 'author'
 
 # Manga controllers
 
@@ -38,16 +40,16 @@ class MangaListView(ListView):
     
     template_name: str = 'manga/index.html'
     
-    context_object_name = 'mangas'
+    context_object_name: str = 'mangas'
 
 @method_decorator(login_required, name = 'dispatch')
 class MangaDetailView(DetailView):
 
     model: Manga = Manga
 
-    template_name = 'manga/show.html'
+    template_name: str = 'manga/show.html'
 
-    context_object_name = 'manga'
+    context_object_name: str = 'manga'
 
     def get_context_data(self, **kwargs: Any):
 
@@ -58,18 +60,19 @@ class MangaDetailView(DetailView):
         return context
     
 @login_required
-def store_evaluation(request, id):
+def store_evaluation(request: HttpRequest, id: int) -> HttpResponseRedirect | HttpResponsePermanentRedirect:
 
-    manga = Manga.objects.get(id = id)
+    manga: Manga = Manga.objects.get(id = id)
 
     user = request.user
 
     rating = request.POST.get('rating')
 
-    evaluationExists = Evaluation.objects.filter(manga_id = manga.id, user_id = user.id)
+    evaluationExists: QuerySet = Evaluation.objects.filter(manga_id = manga.id, user_id = user.id)
 
     if evaluationExists.exists():
-        evaluation = evaluationExists.get()
+
+        evaluation: Evaluation = evaluationExists.get()
 
         evaluation.rating = rating
 
@@ -81,16 +84,16 @@ def store_evaluation(request, id):
     return redirect('profile', id = user.id)
 
 @login_required
-def destroy_evaluation(request, id):
+def destroy_evaluation(request: HttpRequest, id: int) -> HttpResponseRedirect | HttpResponsePermanentRedirect:
 
     if request.method != 'POST':
         return redirect('dashboard')
 
-    manga = Manga.objects.get(id = id)
+    manga: Manga = Manga.objects.get(id = id)
 
     user = request.user
 
-    evaluation = Evaluation.objects.filter(manga_id = manga.id, user_id = user.id).get()
+    evaluation: Evaluation = Evaluation.objects.filter(manga_id = manga.id, user_id = user.id).get()
 
     evaluation.delete()
 
