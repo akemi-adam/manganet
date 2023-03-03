@@ -21,7 +21,7 @@
     </div>
     <div class="lg:mb12 mb-8">
         <h3 class="mt-8 mb-2 font-bold">Sinopse:</h3>
-        <p class="mb-8">{{ manga.synopsis }}</p>
+        <p class="mb-8 leading-loose">{{ manga.synopsis }}</p>
         <form action="{% url 'manga.evaluation.store' manga.id %}" method="post">
             {% csrf_token %}
             <label for="rating" class="block mb-2 text-sm font-bold">Nota</label>
@@ -39,6 +39,8 @@
                 <div>10</div>
             </div>
             <input name="rating" id="rating" type="range" min="0" max="10" value="5" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-fuchsia-600">
+            <label for="comment" class="block my-4 text-sm font-bold">Comentário</label>
+            <textarea name="comment" id="comment" class="border-2 w-full h-32 rounded bg-gray-100"></textarea>
             <button class="bg-fuchsia-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-fuchsia-600 duration-700 ease-in-out mt-12 mx-auto block">Enviar</button>
         </form>
         {% if is_rated %}
@@ -47,5 +49,14 @@
             <button class="text-red-600 hover:text-red-700 hover:trasition-all duration-700 ease-in-out background-transparent outline-none uppercase hover:underline font-bold">Remover avaliação</button>
         </form>
         {% endif %}
+        <hr class="w-48 h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-500">
+        {% for comment in comments %}
+            {% if comment.comment is not None %}
+            <div class="my-4 text-gray-900 flex flex-col gap-2">
+                <h4><a href="{% url 'profile' comment.user_id %}" class="font-bold hover:text-fuchsia-400 hover:trasition-all duration-700 ease-in-out">{{ comment.user.username }}</a> <span class="font-medium">deixou o seguinte comentário:</span></h4>
+                <p>{{ comment.comment }}</p>
+            </div>
+            {% endif %}
+        {% endfor %}
     </div>
 {% endblock%}

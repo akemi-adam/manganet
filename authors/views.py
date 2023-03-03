@@ -65,6 +65,8 @@ class MangaDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         
         context['is_rated'] = self.get_object().users.contains(self.request.user)
+
+        context['comments'] = self.get_object().evaluation_set.all()
         
         return context
     
@@ -78,18 +80,24 @@ def store_evaluation(request: HttpRequest, id: int) -> HttpResponseRedirect | Ht
 
     rating = request.POST.get('rating')
 
+    comment = request.POST.get('comment')
+
     evaluationExists: QuerySet = Evaluation.objects.filter(manga_id = manga.id, user_id = user.id)
 
     if evaluationExists.exists():
 
         evaluation: Evaluation = evaluationExists.get()
 
-        evaluation.rating = rating
+        if rating is not evaluation.rating:
+            evaluation.rating = rating
+
+        if comment is not None and comment is not '':
+           evaluation.comment = comment
 
         evaluation.save()
 
     else:
-        manga.users.add(user, through_defaults = {'rating': rating})
+        manga.users.add(user, through_defaults = { 'rating': rating, 'comment': comment })
 
     return redirect('profile', id = user.id)
 
