@@ -52,7 +52,7 @@ def register(request: HttpRequest) -> HttpResponse | HttpResponseRedirect | Http
     return render(request, "auth/register.html", { 'form': RegisterForm() })
 
 @user_passes_test(guest, login_url = "/dashboard")
-def login(request: HttpRequest):
+def login(request: HttpRequest) -> HttpResponse | HttpResponseRedirect | HttpResponsePermanentRedirect:
     """
     Checks that the request method is POST. If it is, try to log the user in and validate the form to send them to the dashboard page.
 
