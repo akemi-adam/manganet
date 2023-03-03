@@ -26,6 +26,8 @@ class Manga(models.Model):
 
     users = models.ManyToManyField(get_user_model(), through = 'Evaluation')
 
+    cover = models.ImageField(upload_to = 'manga/%Y/%m/%d/', verbose_name = 'Capa')
+
     def __str__(self) -> str:
         return f'{self.title}'
     
