@@ -39,5 +39,7 @@ class Evaluation(models.Model):
 
     rating = models.IntegerField(default = 0, verbose_name = 'Nota')
 
+    comment = models.TextField(blank = True, null = True, verbose_name = 'Comentário')
+
     def __str__(self) -> str:
         return f'{self.user.username} avaliou "{self.manga.title}" como {self.rating}/10'
