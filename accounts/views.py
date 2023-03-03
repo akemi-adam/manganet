@@ -13,12 +13,19 @@ from .forms import LoginForm, RegisterForm
 # Aux functions
 
 def guest(user: User) -> bool:
+    """ Checks that the visitor is not logged in """
+
     return not user.is_authenticated
 
 # Controllers
 
 @user_passes_test(guest, login_url = "/dashboard")
 def register(request: HttpRequest) -> HttpResponse | HttpResponseRedirect | HttpResponsePermanentRedirect:
+    """
+    Enters a new user. If the method is POST, it checks if a user with the passed credentials already exists and validates the form; if all is correct, it creates, authenticates and redirects the user to the dashboard.
+
+    If the method is GET, it renders the registration page
+    """
 
     if request.method == 'POST':
 
@@ -46,6 +53,11 @@ def register(request: HttpRequest) -> HttpResponse | HttpResponseRedirect | Http
 
 @user_passes_test(guest, login_url = "/dashboard")
 def login(request: HttpRequest):
+    """
+    Checks that the request method is POST. If it is, try to log the user in and validate the form to send them to the dashboard page.
+
+    If it fails or the request is GET, it renders the login page
+    """
 
     if request.method == 'POST':
 
@@ -65,11 +77,14 @@ def login(request: HttpRequest):
 
 @login_required
 def logout(request: HttpRequest) -> HttpResponseRedirect | HttpResponsePermanentRedirect:
+    """ Logs the user out and redirects them to the login page """
+
     leave(request)
     return redirect('login')
 
 @login_required
 def profile(request: HttpRequest, id: int) -> HttpResponse:
+    """ Retrieves the user and his ratings and renders his profile """
 
     user: User = User.objects.get(id = id)
 
