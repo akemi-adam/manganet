@@ -12,12 +12,15 @@ from .models import Author, Manga, Evaluation
 
 @login_required
 def dashboard(request) -> HttpResponse:
+    """ Returns dashboard page if user is logged in """
+
     return render(request, 'dashboard.html')
 
 # Author controllers
 
 @method_decorator(login_required, name = 'dispatch')
 class AuthorListView(ListView):
+    """ Shows the list of authors if the user is logged in """
     
     model: Author = Author
     
@@ -27,7 +30,8 @@ class AuthorListView(ListView):
 
 @method_decorator(login_required, name = 'dispatch')
 class AuthorDetailView(DetailView):
-    
+    """ Shows the detail of a specif author if the user is logged in """
+
     model: Author = Author
     
     template_name: str = 'author/show.html'
@@ -38,6 +42,7 @@ class AuthorDetailView(DetailView):
 
 @method_decorator(login_required, name = 'dispatch')
 class MangaListView(ListView):
+    """ Shows the list of mangas if the user is logged in """
 
     model: Manga = Manga
     
@@ -47,6 +52,7 @@ class MangaListView(ListView):
 
 @method_decorator(login_required, name = 'dispatch')
 class MangaDetailView(DetailView):
+    """ Shows the detail of a specif manga if the user is logged in """
 
     model: Manga = Manga
 
@@ -64,6 +70,7 @@ class MangaDetailView(DetailView):
     
 @login_required
 def store_evaluation(request: HttpRequest, id: int) -> HttpResponseRedirect | HttpResponsePermanentRedirect:
+    """ Saves a user's rating of a particular manga. If the rating has already been done, overwrites the previous one with the new one. Redirects to the user's profile """
 
     manga: Manga = Manga.objects.get(id = id)
 
@@ -88,6 +95,7 @@ def store_evaluation(request: HttpRequest, id: int) -> HttpResponseRedirect | Ht
 
 @login_required
 def destroy_evaluation(request: HttpRequest, id: int) -> HttpResponseRedirect | HttpResponsePermanentRedirect:
+    """ Remove a rating """
 
     if request.method != 'POST':
         return redirect('dashboard')
