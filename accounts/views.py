@@ -1,14 +1,14 @@
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect
 
+from django.shortcuts import redirect, render
+
 from django.db.models import Q
 
-from django.shortcuts import redirect, render
+from .forms import LoginForm, RegisterForm
 
 from django.contrib.auth import authenticate, login as auth, logout as leave
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.models import User
-
-from .forms import LoginForm, RegisterForm
 
 # Aux functions
 
