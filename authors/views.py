@@ -11,10 +11,14 @@ from django.shortcuts import render, redirect
 from .models import Author, Manga, Evaluation
 
 @login_required
-def dashboard(request) -> HttpResponse:
+def dashboard(request: HttpRequest) -> HttpResponse:
     """ Returns dashboard page if user is logged in """
 
-    return render(request, 'dashboard.html')
+    """ user = request.user """
+
+    latest_mangas = Manga.objects.order_by('-id')[:3]
+
+    return render(request, 'dashboard.html', { 'latest_mangas': latest_mangas })
 
 # Author controllers
 
