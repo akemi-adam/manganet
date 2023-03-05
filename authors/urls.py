@@ -6,6 +6,7 @@ urlpatterns = [
     #Generic routes
     
     path('dashboard', views.dashboard, name = 'dashboard'),
+    path('', views.homepage, name = 'homepage'),
 
     # Author routes
     

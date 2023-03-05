@@ -1,13 +1,17 @@
 from typing import Any
+
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect
+
 from django.db.models.query import QuerySet
 
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.utils.decorators import method_decorator
 
 from django.views.generic import ListView, DetailView
 from django.shortcuts import render, redirect
 from django.db import connection
+
+from accounts.views import guest
 
 from .models import Author, Manga, Evaluation
 
@@ -23,6 +27,7 @@ def dictfetchall(cursor):
     ]
 
 def top_rated_mangas():
+    """ Returns a dictionary with top rated mangas """
 
     with connection.cursor() as cursor:
 
@@ -31,6 +36,13 @@ def top_rated_mangas():
         top_rated_mangas = dictfetchall(cursor)
 
     return top_rated_mangas
+
+# Homepage Controller
+
+@user_passes_test(guest, login_url = "/dashboard")
+def homepage(request: HttpRequest) -> HttpResponseRedirect | HttpResponsePermanentRedirect:
+    """ Redirects to the login page """
+    return redirect('login')
 
 # Dashboard Controller
 
