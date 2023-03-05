@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
             (
                 'CREATE FUNCTION fn_topRatedMangas() RETURNS TABLE (top_manga_id BIGINT, top_manga_total NUMERIC, top_manga_title VARCHAR) LANGUAGE plpgsql AS $$ BEGIN RETURN QUERY SELECT DISTINCT authors_evaluation.manga_id, fn_avgRating(authors_evaluation.manga_id) AS total, authors_manga.title FROM authors_evaluation JOIN authors_manga ON authors_manga.id = authors_evaluation.manga_id ORDER BY total DESC LIMIT 5; END; $$;'
             ),
-            ('DROP FUNCTION gn_topRatedMangas();')
+            ('DROP FUNCTION IF EXISTS fn_topRatedMangas();')
         )
     ]
