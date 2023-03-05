@@ -20,4 +20,37 @@
         </div>
         {% endfor %}
     </div>
+    <div class="my-8">
+      <canvas id="top-rated-mangas-graphic"></canvas>
+    </div>
+{% endblock %}
+
+{% block graphics %}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    
+    const context = document.getElementById("top-rated-mangas-graphic").getContext('2d');
+
+    const graphic = new Chart(context, {
+      type: 'bar',
+      data: {
+        labels: [{% for rated_manga in top_rated_mangas %} "{{ rated_manga.top_manga_title }}", {% endfor %}],
+        datasets: [{
+          label: "Mangás mais bem avaliados de todo o site",
+          data: [{% for rated_manga in top_rated_mangas %} {{ rated_manga.top_manga_total }}, {% endfor %}],
+          backgroundColor: "#F0ABFC",
+          borderColor: "#E879F9",
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    
+  </script>
 {% endblock %}

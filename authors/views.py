@@ -7,18 +7,43 @@ from django.utils.decorators import method_decorator
 
 from django.views.generic import ListView, DetailView
 from django.shortcuts import render, redirect
+from django.db import connection
 
 from .models import Author, Manga, Evaluation
 
+# Aux functions
+
+def dictfetchall(cursor):
+    "Return all rows from a cursor as a dict"
+    columns = [col[0] for col in cursor.description]
+    
+    return [
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+    ]
+
+def top_rated_mangas():
+
+    with connection.cursor() as cursor:
+
+        cursor.execute('SELECT * FROM fn_topRatedMangas()')
+
+        top_rated_mangas = dictfetchall(cursor)
+
+    return top_rated_mangas
+
+# Dashboard Controller
+
 @login_required
 def dashboard(request: HttpRequest) -> HttpResponse:
-    """ Returns dashboard page if user is logged in """
-
-    """ user = request.user """
+    """ Returns dashboard page if user is logged in, where it shows the 3 most recent manga and the 5 best rated manga"""
 
     latest_mangas = Manga.objects.order_by('-id')[:3]
 
-    return render(request, 'dashboard.html', { 'latest_mangas': latest_mangas })
+    return render(request, 'dashboard.html', {
+        'latest_mangas': latest_mangas,
+        'top_rated_mangas': top_rated_mangas()
+    })
 
 # Author controllers
 
@@ -92,10 +117,10 @@ def store_evaluation(request: HttpRequest, id: int) -> HttpResponseRedirect | Ht
 
         evaluation: Evaluation = evaluationExists.get()
 
-        if rating is not evaluation.rating:
+        if rating != evaluation.rating:
             evaluation.rating = rating
 
-        if comment is not None and comment is not '':
+        if comment != None and comment != '':
            evaluation.comment = comment
 
         evaluation.save()
