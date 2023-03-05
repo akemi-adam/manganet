@@ -19,4 +19,7 @@
         <a href="{% url 'manga.show' manga.id %}" class="underline text-sky-500">Avaliar mangá</a>
     </div>
     {% endfor %}
+    {% if is_paginated %}
+        {% include 'partials/pagination-nav.html' %}
+    {% endif %}
 {% endblock%}

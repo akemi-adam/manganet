@@ -79,6 +79,8 @@ class MangaListView(ListView):
     
     context_object_name: str = 'mangas'
 
+    paginate_by = 5
+
 @method_decorator(login_required, name = 'dispatch')
 class MangaDetailView(DetailView):
     """ Shows the detail of a specif manga if the user is logged in """
